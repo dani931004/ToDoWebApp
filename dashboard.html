@@ -1,0 +1,43 @@
+{% extends "structure.html" %}
+
+{% block main %}
+
+ <h1>Dashboard</h1>
+
+ <form method="get" action="/logout">
+    <button type="submit">Logout</button>
+ </form>
+ 
+ 
+ <p>{{message}}</p>
+ <p>To do Lists:</p>
+ <div>Add new list:
+   <form action="/add" method="POST">
+    <input placeholder="Listname" type="text" name="name">
+    <input type="submit">
+   </form>
+  </div>
+
+<!--  <div>
+   <p>ok</p>
+   <% for todo in todos %>
+   <li><input type="checkbox"></li>
+   <% endfor %>
+ </div> -->
+
+
+
+
+
+<!--  <form action="/dashboard" method="post">
+   <p>Delete list</p>
+   <input placeholder="Listname" name="name" type="text">
+   <input type="submit">
+   <p>Create list</p>
+   <input placeholder="Listname" name="name" type="text">
+   <input placeholder="Date(optional" name="date" type="text">
+   <input type="submit">
+ </form>  
+ -->
+ 
+ {% endblock main %}

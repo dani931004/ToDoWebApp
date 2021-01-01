@@ -1,0 +1,16 @@
+{% extends "structure.html" %}
+
+{% block main %}
+
+ <h1>Lists Page</h1>
+ <p>List 1</p>
+ <p>Tasks:</p>
+ <form action="/list.html">
+    <input type="checkbox" id="task1">
+    <label for="task1">Go to store</label><br>
+    <input type="checkbox" id="task2">
+    <label for="task2">Go to Vet</label><br>
+    <input type="checkbox" id="task3">
+    <label for="task3">Have a shower</label>
+  </form>
+ {% endblock main %}
