@@ -16,14 +16,13 @@
     <input placeholder="Listname" type="text" name="name">
     <input type="submit">
    </form>
-  </div>
-
-<!--  <div>
-   <p>ok</p>
-   <% for todo in todos %>
-   <li><input type="checkbox"></li>
-   <% endfor %>
- </div> -->
+ </div>
+ <div>
+    {% for i in todolist %}
+     <li>{{i}}</li>
+    {% endfor %}
+ </div>
+ 
 
 
 
