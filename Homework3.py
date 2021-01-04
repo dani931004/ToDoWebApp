@@ -68,21 +68,17 @@ def signup():
 def about():
   return render_template('aboutus.html')
 
-@app.route('/dashboard', methods= ['GET','POST'])
+@app.route('/dashboard', methods = ['GET'])
 def dashboard():
-  if request.method == 'GET':
-    message = "Welcome to Dashboard!"
-    return render_template('dashboard.html', message = message)
-  else:
-    todos = model.all()
-    return render_template('dashboard.html', todos=todos)
+  return render_template('dashboard.html')
       
     
 @app.route('/add', methods=['POST'])
 def add():
   name = request.form['name']
   dbadd = model.createList(name)
-  return render_template('dashboard.html', message = dbadd)
+  todolist = model.all()
+  return render_template('dashboard.html', message = dbadd, todolist = todolist)
     
 
 @app.route('/list', methods= ['GET'])

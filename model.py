@@ -61,12 +61,16 @@ def check_users():
 def all():
     connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
     cursor = connection.cursor()
-    cursor.execute("""SELECT * FROM lists""")
-    todos = cursor.fetchall() 
-    to = [todos]
-    return to
+    cursor.execute("""SELECT * FROM lists;""")
+    todo = cursor.fetchall()
+    
+        
+    connection.commit()
+    cursor.close()
+    connection.close()
+    return todo
 
-
+all()
 
 def createList(name):
     now = datetime.now()
