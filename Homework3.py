@@ -13,14 +13,11 @@ user = model.check_users()
 def home():
   if 'email' in session:
     g.user=session['email']
-    return render_template('dashboard.html', message = 'You are logged in!')
+    todolist = model.allLists()
+    return render_template('dashboard.html', message = 'Welcome to Dashboard!', todolist = todolist)
   return render_template('homepage.html', message = 'Log in to the page or sign up!')
   
-""" @app.route("/delete", methods = ["GET"])
-def delete():
-  name = request.form["name"]
-  message = model.deleteList(name)
-  return render_template('dashboard.html',message = message) """
+
 
 @app.before_request
 def before_request():
@@ -77,13 +74,28 @@ def dashboard():
 def add():
   name = request.form['name']
   dbadd = model.createList(name)
-  todolist = model.all()
+  todolist = model.allLists()
   return render_template('dashboard.html', message = dbadd, todolist = todolist)
-    
+  
+@app.route('/dell', methods=['POST'])  
+def dell():
+  name = request.form['name']
+  dbdell = model.deleteList(name)
+  todolist = model.allLists()
+  return render_template('dashboard.html', message = dbdell, todolist = todolist)
 
-@app.route('/list', methods= ['GET'])
-def list():
-  return render_template('list.html')
+@app.route('/update', methods = ['POST'])
+def update():
+  name = request.form["name"]
+  number = request.form["number"]
+  dbupdate = model.updateList(name,number)
+  todolist = model.allLists()
+  return render_template('dashboard.html',message = dbupdate, todolist = todolist)
+
+@app.route('/todolist', methods= ['GET'])
+def todolist():
+  todolist = model.allLists()
+  return render_template('todolist.html', todolist = todolist)
 
 @app.route('/privacy', methods= ['GET'])
 def privacy():
@@ -92,6 +104,7 @@ def privacy():
 @app.route('/termsofuse', methods= ['GET'])
 def termsofuse():
   return render_template('termsofuse.html')
+
 
 
 if __name__ == "__main__":

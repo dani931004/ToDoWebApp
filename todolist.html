@@ -3,6 +3,10 @@
 {% block main %}
 
  <h1>Lists Page</h1>
+ <p>To do Lists:</p>
+ {% for i in todolist %}
+ <li><a href="/todolist">{{ '{}. {} - {}'.format(i[0],i[1],i[2]) }}</a></li>
+ {% endfor %}
  <p>List 1</p>
  <p>Tasks:</p>
  <form action="/list.html">

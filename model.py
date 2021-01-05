@@ -1,7 +1,7 @@
 import sqlite3
 from datetime import datetime
 
-
+#Check if password is right
 def check_pw(email):
     
     connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
@@ -15,6 +15,7 @@ def check_pw(email):
     
     return password
 
+#Sign up the user
 def signup(email, password):
     connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
     cursor = connection.cursor()
@@ -33,7 +34,7 @@ def signup(email, password):
     
     return 'You have signed up successfully!'
 
-
+#Returns all the users
 def check_users():
     
     connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
@@ -56,9 +57,8 @@ def check_users():
     
     return users
 
-
-
-def all():
+#Show all lists on DB
+def allLists():
     connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
     cursor = connection.cursor()
     cursor.execute("""SELECT * FROM lists;""")
@@ -70,8 +70,7 @@ def all():
     connection.close()
     return todo
 
-all()
-
+#Create list on DB
 def createList(name):
     now = datetime.now()
     today = now.strftime("%d/%m/%Y %H:%M:%S")
@@ -81,6 +80,7 @@ def createList(name):
     exist = cursor.fetchone() 
     
     if exist is None:
+        cursor.execute("""UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'lists';""")        
         cursor.execute("""INSERT INTO lists(name,date)VALUES('{}','{}');""".format(name,today))
         
         connection.commit()
@@ -90,8 +90,9 @@ def createList(name):
     else:
         return ('List already exists!!!')
     
-    return 'You have created the list successfully!'
+    return "You have created the list '{}' successfully!".format(name)
 
+#Delete list on DB
 def deleteList(name):
     connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
     cursor = connection.cursor()
@@ -103,6 +104,15 @@ def deleteList(name):
     
     return "You have deleted the list '{}' successfully!".format(name)
 
-
-
+#Rename list on DB
+def updateList(name,idn):
+    connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
+    cursor = connection.cursor()
+    cursor.execute("""UPDATE lists SET name = '{}' WHERE pk = '{}';""".format(name,idn))
+        
+    connection.commit()
+    cursor.close()
+    connection.close()
     
+    return "You have renamed the list number '{}' to '{}' successfully!".format(idn,name)
+
