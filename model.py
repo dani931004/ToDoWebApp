@@ -116,3 +116,63 @@ def updateList(name,idn):
     
     return "You have renamed the list number '{}' to '{}' successfully!".format(idn,name)
 
+#Create task on DB
+def createTask(name):
+    now = datetime.now()
+    today = now.strftime("%d/%m/%Y %H:%M:%S")
+    connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
+    cursor = connection.cursor()
+    cursor.execute("""SELECT name FROM tasks WHERE name = '{}';""".format(name))
+    exist = cursor.fetchone() 
+    
+    if exist is None:
+        cursor.execute("""UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'tasks';""")        
+        cursor.execute("""INSERT INTO tasks(name,date)VALUES('{}','{}');""".format(name,today))
+        
+        connection.commit()
+        cursor.close()
+        connection.close()
+    
+    else:
+        return ('Task already exists!!!')
+    
+    return "You have created the task '{}' successfully!".format(name)
+
+
+#Show all tasks on DB
+def allTasks():
+    connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
+    cursor = connection.cursor()
+    cursor.execute("""SELECT * FROM tasks;""")
+    todo = cursor.fetchall()
+    
+        
+    connection.commit()
+    cursor.close()
+    connection.close()
+    return todo
+
+
+#Delete task on DB
+def deleteTask(name):
+    connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
+    cursor = connection.cursor()
+    cursor.execute("""DELETE FROM tasks WHERE name = '{}';""".format(name))
+        
+    connection.commit()
+    cursor.close()
+    connection.close()
+    
+    return "You have deleted the task '{}' successfully!".format(name)
+
+#Rename task on DB
+def updateTask(name,idn):
+    connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
+    cursor = connection.cursor()
+    cursor.execute("""UPDATE tasks SET name = '{}' WHERE pk = '{}';""".format(name,idn))
+        
+    connection.commit()
+    cursor.close()
+    connection.close()
+    
+    return "You have renamed the task number '{}' to '{}' successfully!".format(idn,name)
