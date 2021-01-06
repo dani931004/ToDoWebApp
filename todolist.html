@@ -1,20 +1,40 @@
 {% extends "structure.html" %}
 
 {% block main %}
+ <p>{{message}}</p>
+ <h1>Tasks Page</h1>
 
- <h1>Lists Page</h1>
- <p>To do Lists:</p>
- {% for i in todolist %}
- <li><a href="/todolist">{{ '{}. {} - {}'.format(i[0],i[1],i[2]) }}</a></li>
- {% endfor %}
- <p>List 1</p>
- <p>Tasks:</p>
- <form action="/list.html">
-    <input type="checkbox" id="task1">
-    <label for="task1">Go to store</label><br>
-    <input type="checkbox" id="task2">
-    <label for="task2">Go to Vet</label><br>
-    <input type="checkbox" id="task3">
-    <label for="task3">Have a shower</label>
+ <div>Add new task:
+  <form action="/addtask" method="POST">
+   <input placeholder="Taskname" type="text" name="name">
+   <button type='submit'>Add</button>
   </form>
- {% endblock main %}
+ </div>
+
+ <div>Delete task:
+  <form action="/deltask" method="POST">
+   <input placeholder="Taskname" type="text" name="name">
+   <button type='submit'>Delete</button>
+  </form>
+ </div>
+
+ <div>Rename task:
+  <form action="/updatetask" method="POST">
+   <input placeholder="Number" type="int" name="number">
+   <input placeholder="Newname" type="text" name="name">
+   <button type='submit'>Rename</button>
+  </form>
+</div>
+
+ <div>
+  <p>Tasks:</p>
+   {% for i in alltasks %}
+   <input type="checkbox">{{ '{}. {} - {}'.format(i[0],i[1],i[2]) }}<br>
+   {% endfor %}
+ </div>
+
+
+
+
+
+{% endblock main %}

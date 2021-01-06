@@ -68,8 +68,7 @@ def about():
 @app.route('/dashboard', methods = ['GET'])
 def dashboard():
   return render_template('dashboard.html')
-      
-    
+        
 @app.route('/add', methods=['POST'])
 def add():
   name = request.form['name']
@@ -94,8 +93,30 @@ def update():
 
 @app.route('/todolist', methods= ['GET'])
 def todolist():
-  todolist = model.allLists()
-  return render_template('todolist.html', todolist = todolist)
+  return render_template('todolist.html')
+
+@app.route('/addtask', methods= ['POST'])
+def addtask():
+  name = request.form['name']
+  dbadd = model.createTask(name)
+  alltasks = model.allTasks()
+  return render_template('todolist.html', message = dbadd, alltasks = alltasks)
+
+
+@app.route('/updatetask', methods= ["POST"])
+def updatetask():
+  name = request.form["name"]
+  number = request.form["number"]
+  dbupdate = model.updateTask(name,number)
+  alltasks = model.allTasks()
+  return render_template('todolist.html', alltasks = alltasks)
+
+@app.route('/deltask', methods= ['POST'])
+def deltask():
+  name = request.form["name"]
+  dbdel = model.deleteTask(name)
+  alltasks = model.allTasks()
+  return render_template('todolist.html', message = dbdel,alltasks = alltasks)
 
 @app.route('/privacy', methods= ['GET'])
 def privacy():
