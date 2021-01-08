@@ -37,9 +37,11 @@
 
  <p>To do Lists:</p>
  
- {% for i in todolist %}
- <li><a href="/todolist">{{ '{}. {} - {}'.format(i[0],i[1],i[2]) }}</a></li>
- {% endfor %}
 
+
+ {% for i in todolist %}
+ <a href="/todolist" > {{ '{}. {} - {}'.format(i[0],i[1],i[2]) }}</a>
+ <br>
+ {% endfor %}
 
  {% endblock main %}
