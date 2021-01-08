@@ -169,7 +169,7 @@ def deleteTask(name):
 def updateTask(name,idn):
     connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
     cursor = connection.cursor()
-    cursor.execute("""UPDATE tasks SET name = '{}' WHERE pk = '{}';""".format(name,idn))
+    cursor.execute("""UPDATE tasks SET name = '{}' WHERE idlist = '{}';""".format(name,idn))
         
     connection.commit()
     cursor.close()
