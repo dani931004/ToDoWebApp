@@ -67,6 +67,8 @@ def about():
 
 @app.route('/dashboard', methods = ['GET'])
 def dashboard():
+  idlist = request.form["idlist"]
+  dbsel = model.selTask(idlist)
   return render_template('dashboard.html')
         
 @app.route('/add', methods=['POST'])
@@ -91,9 +93,11 @@ def update():
   todolist = model.allLists()
   return render_template('dashboard.html',message = dbupdate, todolist = todolist)
 
-@app.route('/todolist', methods= ['GET'])
+@app.route('/todolist', methods= ['GET','POST'])
 def todolist():
-  return render_template('todolist.html')
+  lists = model.allLists()
+  alltasks = model.allTasks()
+  return render_template('todolist.html', alltasks = alltasks)
 
 @app.route('/addtask', methods= ['POST'])
 def addtask():
