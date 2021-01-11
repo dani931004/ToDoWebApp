@@ -20,28 +20,31 @@
    </form>
  </div>
 
- <div>Delete list:
-   <form action="/dell" method="POST">
-    <input placeholder="Listname" type="text" name="name">
-    <button type='submit'>Delete</button>
-   </form>
- </div>
-
- <div>Rename list:
-   <form action="/update" method="POST">
-    <input placeholder="Number" type="int" name="number">
-    <input placeholder="Newname" type="text" name="name">
-    <button type='submit'>Rename</button>
-   </form>
- </div>
-
- <p>To do Lists:</p>
  
 
 
- {% for i in todolist %}
- <a href="/todolist" > {{ '{}. {} - {}'.format(i[0],i[1],i[2]) }}</a>
- <br>
+
+ <p>To do Lists:</p>
+
+  {% for i in todolist %}
+<div style="display: flex;">
+
+
+  <form action="/todolist" method="POST">
+    <input value="{{i[0]}}" type="hidden" name="idlist">
+    <button class="btn btn-link" type="submit"> {{ '{}. {} - {}'.format(i[0],i[1],i[2]) }}</button>
+  </form> 
+  <form action="/dell" method="POST">
+    <input value="{{i[1]}}" type="hidden" name="name">
+    <input value="{{i[0]}}" type="hidden" name="idlistt">
+    <button class="btn-sm" type='submit'>x</button>
+  </form>
+  <form action="/update" method="POST">
+    <input value="{{i[0]}}" type="hidden" name="number">
+    <input placeholder="Newname" type="text" name="name">
+    <button type='submit'>Rename</button>
+   </form>
+  </div>
  {% endfor %}
 
  {% endblock main %}
