@@ -7,7 +7,7 @@ app.secret_key = 'jumpjacks'
 username = ''
 user = model.check_users()
 
-
+idList=1
 
 @app.route("/", methods = ["GET"])
 def home():
@@ -67,8 +67,6 @@ def about():
 
 @app.route('/dashboard', methods = ['GET'])
 def dashboard():
-  idlist = request.form["idlist"]
-  dbsel = model.selTask(idlist)
   return render_template('dashboard.html')
         
 @app.route('/add', methods=['POST'])
@@ -77,12 +75,14 @@ def add():
   dbadd = model.createList(name)
   todolist = model.allLists()
   return render_template('dashboard.html', message = dbadd, todolist = todolist)
-  
+
 @app.route('/dell', methods=['POST'])  
 def dell():
   name = request.form['name']
+  idlist = request.form['idlistt']
   dbdell = model.deleteList(name)
   todolist = model.allLists()
+  deltasks = model.deltasks(idlist)
   return render_template('dashboard.html', message = dbdell, todolist = todolist)
 
 @app.route('/update', methods = ['POST'])
@@ -93,34 +93,44 @@ def update():
   todolist = model.allLists()
   return render_template('dashboard.html',message = dbupdate, todolist = todolist)
 
+
+
 @app.route('/todolist', methods= ['GET','POST'])
 def todolist():
-  lists = model.allLists()
-  alltasks = model.allTasks()
-  return render_template('todolist.html', alltasks = alltasks)
+  global idList
+  idlist = request.form['idlist'] # ID of the List
+  idList = idlist
+  alltasks = model.selTask(idlist)
+  sellist = model.selList(idlist)
+  return render_template('todolist.html',idlist = idlist, alltasks = alltasks, sellist=sellist),idList
 
 @app.route('/addtask', methods= ['POST'])
 def addtask():
   name = request.form['name']
-  dbadd = model.createTask(name)
-  alltasks = model.allTasks()
-  return render_template('todolist.html', message = dbadd, alltasks = alltasks)
+  idlistt = request.form['idlistt']
+  dbadd = model.createTask(name,idList)
+  sellist = model.selList(idList)
+  alltasks = model.selTask(idList)
+  return render_template('todolist.html',idlistt = idlistt, message = dbadd, alltasks = alltasks, sellist = sellist)
 
 
 @app.route('/updatetask', methods= ["POST"])
 def updatetask():
-  name = request.form["name"]
   number = request.form["number"]
+  name = request.form["name"]
   dbupdate = model.updateTask(name,number)
-  alltasks = model.allTasks()
-  return render_template('todolist.html', alltasks = alltasks)
+  sellist = model.selList(idList)
+  alltasks = model.selTask(idList)
+  return render_template('todolist.html', alltasks = alltasks, sellist = sellist)
 
 @app.route('/deltask', methods= ['POST'])
 def deltask():
   name = request.form["name"]
   dbdel = model.deleteTask(name)
-  alltasks = model.allTasks()
-  return render_template('todolist.html', message = dbdel,alltasks = alltasks)
+  idlistt = request.form['idlistt']
+  alltasks = model.selTask(idList)
+  sellist = model.selList(idList)
+  return render_template('todolist.html',sellist = sellist, message = dbdel,alltasks = alltasks)
 
 @app.route('/privacy', methods= ['GET'])
 def privacy():
