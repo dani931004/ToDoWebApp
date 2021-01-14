@@ -5,6 +5,7 @@ app = Flask(__name__)
 app.secret_key = 'jumpjacks'
 
 username = ''
+
 user = model.check_users()
 
 idList=1
@@ -13,8 +14,8 @@ idList=1
 def home():
   if 'email' in session:
     g.user=session['email']
-    todolist = model.allLists()
-    return render_template('dashboard.html', message = 'Welcome to Dashboard!', todolist = todolist)
+    todolist = model.selList(username)
+    return render_template('dashboard.html', message = 'Welcome to Dashboard! {}'.format(username), todolist = todolist)
   return render_template('homepage.html', message = 'Log in to the page or sign up!')
   
 
@@ -28,14 +29,15 @@ def before_request():
 
 @app.route('/login', methods= ['GET','POST'])
 def login():
+  global username
   if request.method ==  'POST':
     session.pop('email', None)
-    areyouuser = request.form['email']
-    pwd = model.check_pw(areyouuser)
+    username = request.form['email']
+    pwd = model.check_pw(username)
     if request.form['password'] == pwd:
       session['email'] = request.form['email']
       return redirect(url_for('home'))
-  return render_template('index.html')
+  return render_template('login.html')
 
 
 @app.route('/getsession')
@@ -72,8 +74,8 @@ def dashboard():
 @app.route('/add', methods=['POST'])
 def add():
   name = request.form['name']
-  dbadd = model.createList(name)
-  todolist = model.allLists()
+  dbadd = model.createList(name,username)
+  todolist = model.selList(username)
   return render_template('dashboard.html', message = dbadd, todolist = todolist)
 
 @app.route('/dell', methods=['POST'])  
@@ -81,7 +83,7 @@ def dell():
   name = request.form['name']
   idlist = request.form['idlistt']
   dbdell = model.deleteList(name)
-  todolist = model.allLists()
+  todolist = model.selList(username)
   deltasks = model.deltasks(idlist)
   return render_template('dashboard.html', message = dbdell, todolist = todolist)
 
@@ -90,7 +92,7 @@ def update():
   name = request.form["name"]
   number = request.form["number"]
   dbupdate = model.updateList(name,number)
-  todolist = model.allLists()
+  todolist = model.selList(username)
   return render_template('dashboard.html',message = dbupdate, todolist = todolist)
 
 
@@ -100,17 +102,18 @@ def todolist():
   global idList
   idlist = request.form['idlist'] # ID of the List
   idList = idlist
-  alltasks = model.selTask(idlist)
-  sellist = model.selList(idlist)
-  return render_template('todolist.html',idlist = idlist, alltasks = alltasks, sellist=sellist),idList
+  listname = request.form['listname']
+  alltasks = model.selTask(idlist,username)
+  sellist = model.selList(username)
+  return render_template('todolist.html',listname = listname, idlist = idlist, alltasks = alltasks, sellist=sellist),idList
 
 @app.route('/addtask', methods= ['POST'])
 def addtask():
   name = request.form['name']
   idlistt = request.form['idlistt']
-  dbadd = model.createTask(name,idList)
-  sellist = model.selList(idList)
-  alltasks = model.selTask(idList)
+  dbadd = model.createTask(name,idList,username)
+  sellist = model.selList(username)
+  alltasks = model.selTask(idList,username)
   return render_template('todolist.html',idlistt = idlistt, message = dbadd, alltasks = alltasks, sellist = sellist)
 
 
@@ -119,8 +122,8 @@ def updatetask():
   number = request.form["number"]
   name = request.form["name"]
   dbupdate = model.updateTask(name,number)
-  sellist = model.selList(idList)
-  alltasks = model.selTask(idList)
+  sellist = model.selList(username)
+  alltasks = model.selTask(idList,username)
   return render_template('todolist.html', alltasks = alltasks, sellist = sellist)
 
 @app.route('/deltask', methods= ['POST'])
@@ -128,8 +131,8 @@ def deltask():
   name = request.form["name"]
   dbdel = model.deleteTask(name)
   idlistt = request.form['idlistt']
-  alltasks = model.selTask(idList)
-  sellist = model.selList(idList)
+  alltasks = model.selTask(idList,username)
+  sellist = model.selList(username)
   return render_template('todolist.html',sellist = sellist, message = dbdel,alltasks = alltasks)
 
 @app.route('/privacy', methods= ['GET'])
