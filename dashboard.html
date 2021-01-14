@@ -1,22 +1,14 @@
 {% extends "structure.html" %}
 
 {% block main %}
-
+<div class="module darken">
  <h1>Dashboard</h1>
  <p>{{message}}</p>
-
- 
-
- <form method="get" action="/logout">
-    <button type="submit">Logout</button>
- </form>
-
- <br>
 
  <div>Add new list:
    <form action="/add" method="POST">
     <input placeholder="Listname" type="text" name="name">
-    <button type='submit'>Add</button>
+    <button class="btn btn-info" type='submit'>Add</button>
    </form>
  </div>
 
@@ -27,24 +19,30 @@
  <p>To do Lists:</p>
 
   {% for i in todolist %}
-<div style="display: flex;">
 
 
-  <form action="/todolist" method="POST">
-    <input value="{{i[0]}}" type="hidden" name="idlist">
-    <button class="btn btn-link" type="submit"> {{ '{}. {} - {}'.format(i[0],i[1],i[2]) }}</button>
-  </form> 
-  <form action="/dell" method="POST">
-    <input value="{{i[1]}}" type="hidden" name="name">
-    <input value="{{i[0]}}" type="hidden" name="idlistt">
-    <button class="btn-sm" type='submit'>x</button>
-  </form>
-  <form action="/update" method="POST">
-    <input value="{{i[0]}}" type="hidden" name="number">
-    <input placeholder="Newname" type="text" name="name">
-    <button type='submit'>Rename</button>
-   </form>
+  <div style="display: flex;">
+    <form action="/todolist" method="POST">
+      <input value="{{i[0]}}" type="hidden" name="idlist">
+      <input value="{{i[1]}}" type="hidden" name="listname">
+      <button class="btn btn-link" style="color:white;" type="submit"> {{ '{}. {} - {}'.format(i[0],i[1],i[2]) }}</a>
+    </form> 
+  
+
+    <form action="/dell" method="POST">
+      <input value="{{i[1]}}" type="hidden" name="name">
+      <input value="{{i[0]}}" type="hidden" name="idlistt">
+      <button class=" btn btn-info" type='submit'>x</button>
+    </form>
+    <form action="/update" method="POST">
+      <input value="{{i[0]}}" type="hidden" name="number">
+      <input placeholder="Newname" type="text" name="name">
+      <button class="btn btn-info" type='submit'>Rename</button>
+    </form>
+
   </div>
+
  {% endfor %}
+
 
  {% endblock main %}
