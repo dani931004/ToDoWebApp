@@ -1,12 +1,15 @@
 {% extends "structure.html" %}
 
 {% block main %}
+<div class="module darken">
 <h1>Sign up Page</h1>
- <form action="/signup" method="post">
-    <input placeholder="Email" name="email" type="text">
-    <input placeholder="Password" name="password" type="password">
-    <input type="submit">
- </form>
  <p>{{message}}</p>
-
+ <form action="/signup" method="POST" class="form-signin">
+   <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+   <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+   <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+   <br>
+   <button style="color: white;" class="w-100 btn btn-lg btn-info" type="submit">Sign up</button>
+</form>
+</div>
 {% endblock main %}
