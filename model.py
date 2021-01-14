@@ -8,7 +8,6 @@ def check_pw(email):
     cursor = connection.cursor()
     cursor.execute("""SELECT password FROM users WHERE email like '{}' ORDER BY pk DESC;""".format(email))
     password = cursor.fetchone()[0]
-        
     connection.commit()
     cursor.close()
     connection.close()
@@ -39,7 +38,7 @@ def check_users():
     
     connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
     cursor = connection.cursor()
-    cursor.execute("""SELECT email FROM users ORDER BY pk DESC;""")
+    cursor.execute("""SELECT email FROM users;""")
     db_users = cursor.fetchall()
     users = []
     
@@ -71,10 +70,24 @@ def allLists():
     return todo
 
 #Select list by ID
-def selList(idlist):
+def selList(username):
     connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
     cursor = connection.cursor()
-    cursor.execute("""SELECT * FROM lists WHERE idlist = '{}';""".format(idlist))
+    cursor.execute("""SELECT * FROM lists WHERE email = '{}';""".format(username))
+    todo = cursor.fetchall()
+    
+        
+    connection.commit()
+    cursor.close()
+    connection.close()
+    
+    return todo
+
+#Select task by ID of list
+def selTask(idlist,username):
+    connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
+    cursor = connection.cursor()
+    cursor.execute("""SELECT * FROM tasks WHERE (idlistt = '{}' and email = '{}');""".format(idlist,username))
     todo = cursor.fetchall()
     
         
@@ -85,7 +98,7 @@ def selList(idlist):
     return todo
 
 #Create list on DB
-def createList(name):
+def createList(name,email):
     now = datetime.now()
     today = now.strftime("%d/%m/%Y %H:%M:%S")
     connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
@@ -95,7 +108,7 @@ def createList(name):
     
     if exist is None:
         cursor.execute("""UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'lists';""")        
-        cursor.execute("""INSERT INTO lists(name,date)VALUES('{}','{}');""".format(name,today))
+        cursor.execute("""INSERT INTO lists(name,date,email)VALUES('{}','{}','{}');""".format(name,today,email))
         
         connection.commit()
         cursor.close()
@@ -131,40 +144,21 @@ def updateList(name,idn):
     return "You have renamed the list number '{}' to '{}' successfully!".format(idn,name)
 
 #Create task on DB
-def createTask(name,idlist):
+def createTask(name,idlist,email):
     now = datetime.now()
     today = now.strftime("%d/%m/%Y %H:%M:%S")
     connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
     cursor = connection.cursor()
-    cursor.execute("""SELECT name FROM tasks WHERE name = '{}';""".format(name))
-    exist = cursor.fetchone() 
+    cursor.execute("""UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'tasks';""")        
+    cursor.execute("""INSERT INTO tasks(name,date,idlistt,email)VALUES('{}','{}','{}','{}');""".format(name,today,idlist,email))
     
-    if exist is None:
-        cursor.execute("""UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'tasks';""")        
-        cursor.execute("""INSERT INTO tasks(name,date,idlistt)VALUES('{}','{}','{}');""".format(name,today,idlist))
-        
-        connection.commit()
-        cursor.close()
-        connection.close()
-    
-    else:
-        return ('Task already exists!!!')
-    
-    return "You have created the task '{}' successfully!".format(name)
-
-
-#Show all tasks on DB
-def allTasks():
-    connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
-    cursor = connection.cursor()
-    cursor.execute("""SELECT * FROM tasks;""")
-    todo = cursor.fetchall()
-    
-        
     connection.commit()
     cursor.close()
     connection.close()
-    return todo
+  
+    return "You have created the task '{}' successfully!".format(name)
+
+
 
 #Delete all tasks by idlistt
 def deltasks(idlist):
@@ -233,16 +227,3 @@ def deltable():
     cursor.close()
     connection.close()
 
-#Select task by ID of list
-def selTask(idlist):
-    connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
-    cursor = connection.cursor()
-    cursor.execute("""SELECT * FROM tasks WHERE idlistt = '{}';""".format(idlist))
-    todo = cursor.fetchall()
-    
-        
-    connection.commit()
-    cursor.close()
-    connection.close()
-    
-    return todo
