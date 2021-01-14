@@ -1,50 +1,55 @@
 {% extends "structure.html" %}
 
 {% block main %}
- <a href="/">Return to Dashboard</a>
- <p>{{message}}</p>
+<div class="module darken">
+
+ 
+
  <h1>Tasks Page</h1>
- {% for i in sellist%}
- <h3>{{i[1]}}</h3>
- {% endfor %}
+ <h3>{{listname}}</h3>
+ <p>{{message}}</p>
+
 
  <div>Add new task:
   <form action="/addtask" method="POST">
-   <input placeholder="Taskname" type="text" name="name"><button type='submit'>Add</button>
+   <input placeholder="Taskname" type="text" name="name">
+   <button class="btn btn-info" type='submit'>Add</button>
    <input value="{{idlistt}}" type="hidden" name="idlistt" >
   </form>
  </div>
 
 
- <div>
+
 
   <p>Tasks:</p>
   
    {% for i in alltasks %}
    <div style="display: flex;">
-   <div>
-   <input type="checkbox">{{ '{}. {} - {}'.format(i[0],i[1],i[2]) }}</input>
+   <div style="display: flex;">
+    <input class="form-check-input" type="checkbox"><h5>{{ '{}. {} - {}'.format(i[0],i[1],i[2]) }}</h5></input>
    </div>
+
    <div>
-   <form action="/deltask" method="POST">
+    <form action="/deltask" method="POST">
      <input value="{{i[1]}}" type="hidden" name="name">
      <input value="{{idlist}}" type="hidden" name="idlistt" >
-     <button class="btn-sm" type='submit'>x</button>
+     <button class="btn btn-info" type='submit'>x</button>
     </form>
    </div>
+
    <div>
     <form action="/updatetask" method="POST">
      <input value="{{i[0]}}" type="hidden" name="number">
      <input placeholder="Newname" type="text" name="name">
      <input value="{{idList}}" type="hidden" name="idlistt" >
-     <button type='submit'>Rename</button>
+     <button class="btn btn-info" type='submit'>Rename</button>
     </form>
    </div>
   </div>
    {% endfor %}
- </div>
 
 
+</div>
 
 
 
