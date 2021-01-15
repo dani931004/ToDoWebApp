@@ -18,7 +18,12 @@ def home():
     return render_template('dashboard.html', message = 'Welcome to Dashboard! {}'.format(username), todolist = todolist)
   return render_template('homepage.html', message = 'Log in to the page or sign up!')
   
-
+@app.route('/adminpage', methods = ['GET'])
+def adminpage():
+  if 'email' in session:
+    g.user=session['email']
+    return render_template('adminpage.html', message = 'Welcome to Adminpage! {}'.format(username))
+  return render_template('admin.html')
 
 @app.before_request
 def before_request():
@@ -61,7 +66,27 @@ def signup():
     password = request.form["password"]
     message = model.signup(email, password)
     return render_template('signup.html',message = message)
-    
+
+@app.route('/getsessionadm')
+def getSessionadm():
+  if 'email' in session:
+    return session['email']
+  return redirect(url_for('admin'))
+
+@app.route('/admin', methods = ['GET', 'POST'])
+def admin():
+    global username
+    if request.method ==  'POST':
+      session.pop('email', None)
+      username = request.form['email']
+      pwd = model.check_pw_adm(username)
+      if request.form['password'] == pwd:
+        session['email'] = request.form['email']
+        return redirect(url_for('adminpage'))
+    return render_template('admin.html')
+
+
+
 
 @app.route('/aboutus', methods= ['GET'])
 def about():
@@ -69,7 +94,13 @@ def about():
 
 @app.route('/dashboard', methods = ['GET'])
 def dashboard():
-  return render_template('dashboard.html')
+  if 'email' in session:
+    g.user=session['email']
+    todolist = model.selList(username)
+    return render_template('dashboard.html', message = 'Welcome to Dashboard {}'.format(username), todolist=todolist)
+  message = "Log in to the page or sign up!"
+  return render_template('homepage.html', message = message)
+
         
 @app.route('/add', methods=['POST'])
 def add():

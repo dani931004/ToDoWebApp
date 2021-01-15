@@ -14,6 +14,18 @@ def check_pw(email):
     
     return password
 
+def check_pw_adm(email):
+    
+    connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
+    cursor = connection.cursor()
+    cursor.execute("""SELECT password FROM admin WHERE email = '{}' ORDER BY pk DESC;""".format(email))
+    password = cursor.fetchone()[0]
+    connection.commit()
+    cursor.close()
+    connection.close()
+    
+    return password
+
 #Sign up the user
 def signup(email, password):
     connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
@@ -202,11 +214,10 @@ def newtable():
     connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
     cursor = connection.cursor()
     cursor.execute(
-    """CREATE TABLE tasks(
-        idlist INTEGER PRIMARY KEY AUTOINCREMENT,
-        name VARCHAR(16),
-        date VARCHAR(16),
-        idlistt VARCHAR(16)
+    """CREATE TABLE admin(
+        pk INTEGER PRIMARY KEY AUTOINCREMENT,
+        email VARCHAR(32),
+        password VARCHAR(32)
     );"""
 
     )
@@ -219,7 +230,7 @@ def deltable():
     connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
     cursor = connection.cursor()
     cursor.execute(
-    """DROP TABLE tasks;"""
+    """DROP TABLE admin;"""
 
     )
     print("Dropped table!")
