@@ -1,13 +1,18 @@
 {% extends "structure.html" %}
 
 {% block main %}
+<br>
+<br>
+<br>
+<br>
 <div class="module darken">
-<form action="/login" method="POST" class="form-signin">
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-    <input name="email" type="text" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-    <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-    <br>
-    <button style="color: white;" class="w-100 btn btn-lg btn-info" type="submit">Sign in</button>
-</form>
+    <h1 class="h1 mb-3 fw-normal">Sign in Page</h1>
+    <h2 class="h2 mb-3 fw-normal">Please sign in</h2>
+    <form action="/login" method="POST" class="form-signin">
+        <input name="email" type="text" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <br>
+        <button style="color: white;" class="w-100 btn btn-lg btn-info" type="submit">Sign in</button>
+    </form>
 </div>
 {% endblock main %}

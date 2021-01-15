@@ -1,22 +1,30 @@
 {% extends "structure.html" %}
 
 {% block main %}
-
- <div class="module darken">
+<br>
+<br>
+<br>
+<br>
+<div class="module darken">
  <h1 >Home Page</h1>
  <p >{{message}}</p>
-
- <form method="get" action="/aboutus">
-    <button style="color: white;" class="btn btn-info" type="submit">About Us</button>
- </form>
-
- <form method="get" action="/termsofuse">
-    <button style="color: white;" class="btn btn-info" type="submit">Terms of Use</button>
- </form>
-
+ <br>
+ <br>
+ <br>
+ <br>
  <form method="get" action="/privacy">
-    <button style="color: white;" class="btn btn-info" type="submit">Privacy</button>
- </form>
- </div>
-
+   <button style="color: white;" class="btn btn-info" type="submit">Privacy</button>
+</form>
+<br>
+<br>
+<form method="get" action="/aboutus">
+   <button style="color: white;" class="btn btn-info" type="submit">About Us</button>
+</form>
+<br>
+ <br>
+ <form method="get" action="/termsofuse">
+   <button style="color: white;" class="btn btn-info" type="submit">Terms of Use</button>
+</form>
+<br>
+</div>
 {% endblock main %}

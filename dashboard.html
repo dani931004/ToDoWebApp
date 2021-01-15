@@ -1,13 +1,17 @@
 {% extends "structure.html" %}
 
 {% block main %}
+<br>
+<br>
+<br>
+<br>
 <div class="module darken">
  <h1>Dashboard</h1>
  <p>{{message}}</p>
 
  <div>Add new list:
    <form action="/add" method="POST">
-    <input placeholder="Listname" type="text" name="name">
+    <input autofocus="autofocus" class="form-control mr-sm-2" placeholder="Listname" type="text" name="name">
     <button class="btn btn-info" type='submit'>Add</button>
    </form>
  </div>
@@ -21,27 +25,26 @@
   {% for i in todolist %}
 
 
-  <div style="display: flex;">
+  <div style="display: inline-flex;">
     <form action="/todolist" method="POST">
       <input value="{{i[0]}}" type="hidden" name="idlist">
       <input value="{{i[1]}}" type="hidden" name="listname">
-      <button class="btn btn-link" style="color:white;" type="submit"> {{ '{}. {} - {}'.format(i[0],i[1],i[2]) }}</a>
+      <button class="btn btn-link" style="color:white;" type="submit"><h2 class="h5 mb-3 fw-normal"> {{ ' {} - {}'.format(i[1],i[2]) }}</h2></a>
     </form> 
-  
-
     <form action="/dell" method="POST">
       <input value="{{i[1]}}" type="hidden" name="name">
       <input value="{{i[0]}}" type="hidden" name="idlistt">
-      <button class=" btn btn-info" type='submit'>x</button>
+      <button class=" btn btn-info" type='submit'>Del</button>
     </form>
     <form action="/update" method="POST">
       <input value="{{i[0]}}" type="hidden" name="number">
-      <input placeholder="Newname" type="text" name="name">
-      <button class="btn btn-info" type='submit'>Rename</button>
+      <input class="form-control-lg" placeholder="Newname" type="text" name="name">
+      <button style="height: 50px;" class="btn btn-info" type='submit'>Rename</button>
     </form>
 
   </div>
-
+  <br>
+  <br>
  {% endfor %}
 
 

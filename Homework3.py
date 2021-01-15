@@ -54,7 +54,7 @@ def logout():
 @app.route('/signup', methods= ['GET','POST'])
 def signup():
   if request.method == 'GET':
-    message = "Please sign up!"
+    message = "Please sign up"
     return render_template('signup.html', message = message)
   else:
     email = request.form["email"]
