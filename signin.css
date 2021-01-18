@@ -70,3 +70,19 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 3px solid #000000;
+  text-align: center;
+  padding: 7px;
+}
+
+tr:nth-of-type(even) {
+  background-color: #00e1ffa1;
+}

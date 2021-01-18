@@ -26,15 +26,58 @@ def check_pw_adm(email):
     
     return password
 
+#Select usernames signed up in the last 24hours
+def last24h():
+    connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
+    cursor = connection.cursor()
+    cursor.execute("""SELECT email FROM users WHERE "datetime" >=DATETIME("now","-1 day");""")
+    todo = cursor.fetchall()
+    
+        
+    connection.commit()
+    cursor.close()
+    connection.close()
+    return todo
+
+
+#Select all Lists created in the last 24hours
+def last24hLists():
+    connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
+    cursor = connection.cursor()
+    cursor.execute("""SELECT name FROM lists WHERE "date" >=DATETIME("now","-1 day");""")
+    todo = cursor.fetchall()
+    
+        
+    connection.commit()
+    cursor.close()
+    connection.close()
+    return todo
+
+
+#Total Lists created
+def totalLists():
+    connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
+    cursor = connection.cursor()
+    cursor.execute("""SELECT * FROM lists ;""")
+    todo = cursor.fetchall()
+    
+        
+    connection.commit()
+    cursor.close()
+    connection.close()
+    return todo
+
 #Sign up the user
 def signup(email, password):
+    now = datetime.now()
+    today = now.strftime("%Y/%m/%d %H:%M:%S")
     connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
     cursor = connection.cursor()
     cursor.execute("""SELECT password FROM users WHERE email = '{}';""".format(email))
     exist = cursor.fetchone() 
     
     if exist is None:
-        cursor.execute("""INSERT INTO users(email,password)VALUES('{}', '{}');""".format(email,password))
+        cursor.execute("""INSERT INTO users(email,password,datetime)VALUES('{}', '{}','{}');""".format(email,password,today))
         
         connection.commit()
         cursor.close()
@@ -68,11 +111,11 @@ def check_users():
     
     return users
 
-#Show all lists on DB
-def allLists():
+#Show all users on DB
+def allUsers():
     connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
     cursor = connection.cursor()
-    cursor.execute("""SELECT * FROM lists;""")
+    cursor.execute("""SELECT * FROM users;""")
     todo = cursor.fetchall()
     
         
@@ -112,10 +155,10 @@ def selTask(idlist,username):
 #Create list on DB
 def createList(name,email):
     now = datetime.now()
-    today = now.strftime("%d/%m/%Y %H:%M:%S")
+    today = now.strftime("%Y/%m/%d %H:%M:%S")
     connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
     cursor = connection.cursor()
-    cursor.execute("""SELECT name FROM lists WHERE name = '{}';""".format(name))
+    cursor.execute("""SELECT name FROM lists WHERE (name = '{}' and email = '{}');""".format(name,email))
     exist = cursor.fetchone() 
     
     if exist is None:
@@ -158,7 +201,7 @@ def updateList(name,idn):
 #Create task on DB
 def createTask(name,idlist,email):
     now = datetime.now()
-    today = now.strftime("%d/%m/%Y %H:%M:%S")
+    today = now.strftime("%Y/%m/%d %H:%M:%S")
     connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
     cursor = connection.cursor()
     cursor.execute("""UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'tasks';""")        

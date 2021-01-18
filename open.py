@@ -35,9 +35,11 @@ todos = cursor.fetchall()
 connection.commit()
 cursor.close()
 connection.close()
+print(todos)
 
-print("-"*49)
+
+print("-"*80)
 for i in todos:
     print(i)
 
-print("-"*49)
+print("-"*80)

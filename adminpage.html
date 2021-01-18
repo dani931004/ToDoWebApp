@@ -3,4 +3,14 @@
 {% block main %}
 <h1>Admin PAGE</h1>
 <h1>{{message}}</h1>
+<br>
+<br>
+<br>
+<h3><a style="color: white;" href="/userspage">Total user sign ups:<br>{{allusers|length}}</a></h3>
+<br>
+<h3><a style="color: white;" href="/userspage">Total sign ups in the last 24hours:<br>{{last24|length}}</a></h3>
+<br>
+<h3><a style="color: white;" href="/userspage">Total lists created:<br>{{totalLists|length}}</a></h3>
+<br>
+<h3><a style="color: white;" href="/userspage">Lists created in the last 24hours:<br>{{lists24|length}}</a></h3>
 {% endblock main %}

@@ -5,6 +5,7 @@ app = Flask(__name__)
 app.secret_key = 'jumpjacks'
 
 username = ''
+usernameadm = ''
 
 user = model.check_users()
 
@@ -14,15 +15,20 @@ idList=1
 def home():
   if 'email' in session:
     g.user=session['email']
-    todolist = model.selList(username)
-    return render_template('dashboard.html', message = 'Welcome to Dashboard! {}'.format(username), todolist = todolist)
+    todolist = model.selList(g.user)
+    return render_template('dashboard.html', message = 'Welcome to Dashboard! {}'.format(g.user), todolist = todolist)
   return render_template('homepage.html', message = 'Log in to the page or sign up!')
   
 @app.route('/adminpage', methods = ['GET'])
 def adminpage():
-  if 'email' in session:
+  if 'email' in session and (session['email'] == "admin"):
     g.user=session['email']
-    return render_template('adminpage.html', message = 'Welcome to Adminpage! {}'.format(username))
+    allusers = model.allUsers()
+    last24 = model.last24h()
+    totalLists = model.totalLists()
+    lists24 = model.last24hLists()
+    return render_template('adminpage.html',lists24=lists24,totalLists = totalLists, last24=last24, allusers = allusers, message = 'Welcome to Adminpage! {}'.format(g.user))
+  
   return render_template('admin.html')
 
 @app.before_request
@@ -75,18 +81,20 @@ def getSessionadm():
 
 @app.route('/admin', methods = ['GET', 'POST'])
 def admin():
-    global username
+    global usernameadm
     if request.method ==  'POST':
       session.pop('email', None)
-      username = request.form['email']
-      pwd = model.check_pw_adm(username)
+      usernameadm = request.form['email']
+      pwd = model.check_pw_adm(usernameadm)
       if request.form['password'] == pwd:
         session['email'] = request.form['email']
         return redirect(url_for('adminpage'))
     return render_template('admin.html')
 
 
-
+@app.route('/userspage', methods = ['GET'])
+def userspage():
+  return render_template('userspage.html')
 
 @app.route('/aboutus', methods= ['GET'])
 def about():

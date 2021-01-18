@@ -10,7 +10,7 @@
    <br>
 
  <h1>Tasks Page</h1>
- <h3>List name: {{listname}}</h3>
+ <h3>{{listname}}</h3>
  <p>{{message}}</p>
 
 
@@ -30,23 +30,23 @@
    {% for i in alltasks %}
   
    <div style="display: inline-flex;height: 50px;">
-    <input style="width: 22px; height: 22px;" class="form-check-input" type="checkbox"><h3 class="h3 mb-auto fw-bold">{{ '{} - {}'.format(i[1],i[2]) }}</h3>
+    <input style="width: 20px; height: 20px;" class="form-check-input" type="checkbox"><h3 class="h4 mb-auto fw-bold">{{ '{}'.format(i[1]) }}</h3>
   
 
    <div>
     <form action="/deltask" method="POST">
      <input value="{{i[1]}}" type="hidden" name="name">
      <input value="{{idlist}}" type="hidden" name="idlistt" >
-     <button style="height: 50px;" class="btn btn-info" type='submit'>Del</button>
+     <button style="height: 48px;" class="btn btn-info" type='submit'>Del</button>
     </form>
    </div>
 
    <div>
     <form action="/updatetask" method="POST">
      <input value="{{i[0]}}" type="hidden" name="number">
-     <input class="form-control-lg" placeholder="Newname" type="text" name="name">
+     <input style="width: 130px;" class="form-control-lg" placeholder="Newname" type="text" name="name">
      <input value="{{idList}}" type="hidden" name="idlistt" >
-     <button style="height: 50px;" class="btn btn-info" type='submit'>Rename</button>
+     <button style="height: 48px;" class="btn btn-info" type='submit'>Rename</button>
     </form>
    </div>
 
