@@ -1,8 +1,15 @@
 from flask import Flask, render_template, request, session, redirect, url_for, g
 import model
+from flask_paginate import Pagination, get_page_parameter, get_page_args
+
+
+
+
 
 app = Flask(__name__)
 app.secret_key = 'jumpjacks'
+
+users = list(range(len(model.allUsers())))
 
 username = ''
 usernameadm = ''
@@ -81,20 +88,28 @@ def getSessionadm():
 
 @app.route('/admin', methods = ['GET', 'POST'])
 def admin():
-    global usernameadm
-    if request.method ==  'POST':
-      session.pop('email', None)
-      usernameadm = request.form['email']
-      pwd = model.check_pw_adm(usernameadm)
-      if request.form['password'] == pwd:
-        session['email'] = request.form['email']
-        return redirect(url_for('adminpage'))
-    return render_template('admin.html')
+  global usernameadm
+  if request.method ==  'POST':
+    session.pop('email', None)
+    usernameadm = request.form['email']
+    pwd = model.check_pw_adm(usernameadm)
+    if request.form['password'] == pwd:
+      session['email'] = request.form['email']
+      return redirect(url_for('adminpage'))
+  return render_template('admin.html')
 
+def get_users(offset=5, per_page=50):
+  return users[offset: offset + per_page]
 
 @app.route('/userspage', methods = ['GET'])
 def userspage():
-  return render_template('userspage.html')
+  allusers = model.allUsers()
+  page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+  total = len(model.allUsers())
+  pagination_users = get_users(offset=offset, per_page=per_page)
+  pagination = Pagination(page=page, per_page=per_page, total=total, css_framework='bootstrap4')
+  return render_template('userspage.html',allusers=allusers, users=pagination_users, page=page, per_page=per_page, pagination=pagination)
+
 
 @app.route('/aboutus', methods= ['GET'])
 def about():

@@ -5,21 +5,29 @@
 <h1>Users Page</h1>
 <h1>{{message}}</h1>
 
-
+<div class="table-responsive">
+{{ pagination.info }}
+{{ pagination.links }}
 <table>
+  <thead>
     <tr>
-      <th style="color:rgb(0, 183, 255);" >Username</th>
-      <th style="color:rgb(0, 183, 255);" >Datetime</th>
+      <th style="color:rgb(0, 247, 255);">#</th>
+      <th style="color:rgb(0, 247, 255);">Email</th>
+      <th style="color:rgb(0, 247, 255);">Datetime</th>
     </tr>
-    <tr>
-      <td>dani</td>
-      <td>12343414</td>
-    </tr>
-    <tr>
-        <td>marinka</td>
-        <td>12312434</td>
-    </tr>
- 
-  </table>
+  </thead>
+  <tbody>
+    {% for user in users %}
+      <tr>
+        <td>{{ loop.index + (page - 1) * per_page }}</td>
+        <td>{{ allusers[user][1] }}</td>
+        <td>{{ allusers[user][3] }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{{ pagination.links }}
+{{ pagination.info }}
+</div>
 </div>
 {% endblock main %}
