@@ -12,15 +12,20 @@
   <thead>
     <tr>
       <th style="color:rgb(0, 247, 255);">#</th>
-      <th style="color:rgb(0, 247, 255);">Email</th>
-      <th style="color:rgb(0, 247, 255);">Datetime</th>
+      <th style="color:rgb(0, 247, 255);">User email</th>
+      <th style="color:rgb(0, 247, 255);">Datetime signed up</th>
     </tr>
   </thead>
   <tbody>
     {% for user in users %}
       <tr>
-        <td>{{ loop.index + (page - 1) * per_page }}</td>
-        <td>{{ allusers[user][1] }}</td>
+        <td>{{ loop.index +(page-1)*per_page }}</td>
+        <td>
+          <form action="/userinfo" method="POST">
+            <input value="{{ allusers[user][1] }}" type="hidden" name="email">
+            <button class="btn btn-link" type="submit" style="color: white;">{{ allusers[user][1] }}</button>
+          </form>
+        </td>
         <td>{{ allusers[user][3] }}</td>
       </tr>
     {% endfor %}

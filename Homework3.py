@@ -13,7 +13,6 @@ users = list(range(len(model.allUsers())))
 
 username = ''
 usernameadm = ''
-
 user = model.check_users()
 
 idList=1
@@ -88,27 +87,56 @@ def getSessionadm():
 
 @app.route('/admin', methods = ['GET', 'POST'])
 def admin():
-  global usernameadm
+  global username
   if request.method ==  'POST':
     session.pop('email', None)
-    usernameadm = request.form['email']
-    pwd = model.check_pw_adm(usernameadm)
+    username = request.form['email']
+    pwd = model.check_pw_adm(username)
     if request.form['password'] == pwd:
       session['email'] = request.form['email']
       return redirect(url_for('adminpage'))
   return render_template('admin.html')
 
-def get_users(offset=5, per_page=50):
-  return users[offset: offset + per_page]
 
-@app.route('/userspage', methods = ['GET'])
+@app.route('/userspage', methods = ['GET','POST'])
 def userspage():
+  per_page = request.args.get(key="",type=int, default=50)
   allusers = model.allUsers()
-  page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+  page = request.args.get(get_page_parameter(), type=int, default=1)
+  offset = (page - 1) * per_page
   total = len(model.allUsers())
   pagination_users = get_users(offset=offset, per_page=per_page)
   pagination = Pagination(page=page, per_page=per_page, total=total, css_framework='bootstrap4')
   return render_template('userspage.html',allusers=allusers, users=pagination_users, page=page, per_page=per_page, pagination=pagination)
+
+
+
+@app.route('/userinfo', methods = ['GET','POST'])
+def userinfo():
+  userinfo = request.form['email']
+  user = model.selUser(userinfo)
+  for i in user:
+    email = i
+  lists = model.selList(userinfo)
+  return render_template('userinfo.html', lists = lists, user = email)
+
+
+@app.route('/deluser', methods = ['GET','POST'])
+def deluser():
+  name = request.form['name']
+  user = model.selUser(name)
+  for i in user:
+    email = i
+  lists = model.selList(name)
+  message = model.delUser(name)
+  return render_template('userinfo.html', message =  message, lists = lists, user = email)
+
+
+def get_users(offset=0, per_page=50):
+  return users[offset: offset + per_page]
+
+
+
 
 
 @app.route('/aboutus', methods= ['GET'])

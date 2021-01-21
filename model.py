@@ -111,6 +111,61 @@ def check_users():
     
     return users
 
+
+#Delete the User, their Lists and their Tasks on DB
+def delUser(name):
+    connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
+    cursor = connection.cursor()
+    cursor.execute("""DELETE FROM users WHERE email = '{}';""".format(name))
+    cursor.execute("""DELETE FROM lists WHERE email = '{}';""".format(name))
+    cursor.execute("""DELETE FROM tasks WHERE email = '{}';""".format(name))
+        
+    connection.commit()
+    cursor.close()
+    connection.close()
+    
+    return "You have deleted the user '{}' and all their lists and tasks successfully!".format(name)
+
+#Show all details of a user on DB
+def selUser(email):
+    connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
+    cursor = connection.cursor()
+    cursor.execute("""SELECT * FROM users WHERE email = '{}';""".format(email))
+    todo = cursor.fetchall()
+    
+        
+    connection.commit()
+    cursor.close()
+    connection.close()
+    return todo
+
+#Show all tasks of a user on DB
+def allUserTasks(email):
+    connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
+    cursor = connection.cursor()
+    cursor.execute("""SELECT * FROM tasks WHERE email = '{}';""".format(email))
+    todo = cursor.fetchall()
+    
+        
+    connection.commit()
+    cursor.close()
+    connection.close()
+    return todo
+
+#Show all lists of a user on DB
+def allUserLists(email):
+    connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
+    cursor = connection.cursor()
+    cursor.execute("""SELECT * FROM lists WHERE email = '{}';""".format(email))
+    todo = cursor.fetchall()
+    
+        
+    connection.commit()
+    cursor.close()
+    connection.close()
+    return todo
+
+
 #Show all users on DB
 def allUsers():
     connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
