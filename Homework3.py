@@ -228,5 +228,5 @@ def termsofuse():
 
 
 if __name__ == "__main__":
-  app.run()
+  app.run(host="todwapp.heroku.com")
 #host="192.168.0.110",debug = True
