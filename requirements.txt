@@ -4,6 +4,7 @@ certifi==2020.12.5
 click==7.1.2
 Flask==1.1.2
 flask-paginate==0.8.0
+gunicorn @ git+https://github.com/benoitc/gunicorn.git@d1f0f11b7b7d00f74dc22ead8e62d322eb128431
 isort==5.6.3
 itsdangerous==1.1.0
 Jinja2==2.11.2
