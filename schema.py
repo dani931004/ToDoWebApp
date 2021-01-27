@@ -1,6 +1,6 @@
 import sqlite3
 
-connection = sqlite3.connect('/home/dani/Desktop/Python3/Flask/Homework3/todo.db', check_same_thread = False)
+connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
 cursor = connection.cursor()
 
 #Tables
