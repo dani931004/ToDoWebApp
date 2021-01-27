@@ -1,1 +1,1 @@
-web: gunicorn run:Homework3
+web: gunicorn Homework3:app
