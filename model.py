@@ -1,10 +1,10 @@
-import sqlite3
+import psycopg2
 from datetime import datetime
 
 #Check if password is right
 def check_pw(email):
     
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT password FROM users WHERE email like '{}' ORDER BY pk DESC;""".format(email))
     password = cursor.fetchone()[0]
@@ -16,7 +16,7 @@ def check_pw(email):
 
 def check_pw_adm(email):
     
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT password FROM admin WHERE email = '{}' ORDER BY pk DESC;""".format(email))
     password = cursor.fetchone()[0]
@@ -28,7 +28,7 @@ def check_pw_adm(email):
 
 #Select usernames signed up in the last 24hours
 def last24h():
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT email FROM users WHERE "datetime" >=DATETIME("now","-1 day");""")
     todo = cursor.fetchall()
@@ -42,7 +42,7 @@ def last24h():
 
 #Select all Lists created in the last 24hours
 def last24hLists():
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT name FROM lists WHERE "date" >=DATETIME("now","-1 day");""")
     todo = cursor.fetchall()
@@ -56,7 +56,7 @@ def last24hLists():
 
 #Total Lists created
 def totalLists():
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT * FROM lists ;""")
     todo = cursor.fetchall()
@@ -71,7 +71,7 @@ def totalLists():
 def signup(email, password):
     now = datetime.now()
     today = now.strftime("%Y/%m/%d %H:%M:%S")
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT password FROM users WHERE email = '{}';""".format(email))
     exist = cursor.fetchone() 
@@ -91,7 +91,7 @@ def signup(email, password):
 #Returns all the users
 def check_users():
     
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT email FROM users;""")
     db_users = cursor.fetchall()
@@ -114,7 +114,7 @@ def check_users():
 
 #Delete the User, their Lists and their Tasks on DB
 def delUser(name):
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""DELETE FROM users WHERE email = '{}';""".format(name))
     cursor.execute("""DELETE FROM lists WHERE email = '{}';""".format(name))
@@ -128,7 +128,7 @@ def delUser(name):
 
 #Show all details of a user on DB
 def selUser(email):
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT * FROM users WHERE email = '{}';""".format(email))
     todo = cursor.fetchall()
@@ -141,7 +141,7 @@ def selUser(email):
 
 #Show all tasks of a user on DB
 def allUserTasks(email):
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT * FROM tasks WHERE email = '{}';""".format(email))
     todo = cursor.fetchall()
@@ -154,7 +154,7 @@ def allUserTasks(email):
 
 #Show all lists of a user on DB
 def allUserLists(email):
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT * FROM lists WHERE email = '{}';""".format(email))
     todo = cursor.fetchall()
@@ -168,7 +168,7 @@ def allUserLists(email):
 
 #Show all users on DB
 def allUsers():
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT * FROM users;""")
     todo = cursor.fetchall()
@@ -181,7 +181,7 @@ def allUsers():
 
 #Select list by ID
 def selList(username):
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT * FROM lists WHERE email = '{}';""".format(username))
     todo = cursor.fetchall()
@@ -195,7 +195,7 @@ def selList(username):
 
 #Select task by ID of list
 def selTask(idlist,username):
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT * FROM tasks WHERE (idlistt = '{}' and email = '{}');""".format(idlist,username))
     todo = cursor.fetchall()
@@ -211,7 +211,7 @@ def selTask(idlist,username):
 def createList(name,email):
     now = datetime.now()
     today = now.strftime("%Y/%m/%d %H:%M:%S")
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT name FROM lists WHERE (name = '{}' and email = '{}');""".format(name,email))
     exist = cursor.fetchone() 
@@ -231,7 +231,7 @@ def createList(name,email):
 
 #Delete list on DB
 def deleteList(name):
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""DELETE FROM lists WHERE name = '{}';""".format(name))
         
@@ -243,7 +243,7 @@ def deleteList(name):
 
 #Rename list on DB
 def updateList(name,idn):
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""UPDATE lists SET name = '{}' WHERE idlist = '{}';""".format(name,idn))
         
@@ -257,7 +257,7 @@ def updateList(name,idn):
 def createTask(name,idlist,email):
     now = datetime.now()
     today = now.strftime("%Y/%m/%d %H:%M:%S")
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'tasks';""")        
     cursor.execute("""INSERT INTO tasks(name,date,idlistt,email)VALUES('{}','{}','{}','{}');""".format(name,today,idlist,email))
@@ -272,7 +272,7 @@ def createTask(name,idlist,email):
 
 #Delete all tasks by idlistt
 def deltasks(idlist):
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""DELETE FROM tasks WHERE idlistt = '{}';""".format(idlist))
         
@@ -285,7 +285,7 @@ def deltasks(idlist):
 
 #Delete task on DB
 def deleteTask(name):
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""DELETE FROM tasks WHERE name = '{}';""".format(name))
         
@@ -297,7 +297,7 @@ def deleteTask(name):
 
 #Rename task on DB
 def updateTask(name,idn):
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute("""UPDATE tasks SET name = '{}' WHERE idlist = '{}';""".format(name,idn))
         
@@ -309,7 +309,7 @@ def updateTask(name,idn):
 
 #Make new Table
 def newtable():
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute(
     """CREATE TABLE admin(
@@ -325,7 +325,7 @@ def newtable():
     connection.close()
 #Delete Table
 def deltable():
-    connection = sqlite3.connect('https://github.com/dani931004/Homework3/blob/main/todo.db', check_same_thread = False)
+    connection = psycopg2.connect(database="dani", user="dani", password="", host="localhost", port="5432")
     cursor = connection.cursor()
     cursor.execute(
     """DROP TABLE admin;"""
