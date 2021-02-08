@@ -1,14 +1,29 @@
 from flask import Flask, render_template, request, session, redirect, url_for, g
 import model
 from flask_paginate import Pagination, get_page_parameter, get_page_args
+from model import db
 
 
 
-
-
+#app name
 app = Flask(__name__)
-app.secret_key = 'jumpjacks'
 
+
+
+POSTGRES = {
+    'user': 'dani',
+    'pw': 'password',
+    'db': 'dani',
+    'host': 'localhost',
+    'port': '5432',
+}
+app.config['DEBUG'] = True
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
+
+
+# app config
+db.init_app(app)
+app.secret_key = "daniconda"
 users = list(range(len(model.allUsers())))
 
 username = ''
@@ -228,5 +243,4 @@ def termsofuse():
 
 
 if __name__ == "__main__":
-  app.run(host="todwapp.heroku.com")
-#host="192.168.0.110",debug = True
+  app.run()
