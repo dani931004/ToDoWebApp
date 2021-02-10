@@ -30,7 +30,7 @@
 
 
   <div style="display: inline-flex;">
-    <form action="/todolist" method="POST">
+    <form action="/todolist" method="GET">
       <input value="{{i[0]}}" type="hidden" name="idlist">
       <input value="{{i[1]}}" type="hidden" name="listname">
       <button  class="btn btn-link" style="color:white;height: 48px;" type="submit"><h3 class="h4 mb-3 fw-normal"> {{ '{}'.format(i[1]) }}</h3></a>
