@@ -11,11 +11,11 @@ today = now.strftime("%Y-%m-%d %H:%M:%S")
 
 try:
     # Connect to an existing database
-    connection = psycopg2.connect(user="dani",
+    connection = psycopg2.connect(user="mxvufuhtwjccvs",
                                   password="0410",
-                                  host="localhost",
+                                  host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com",
                                   port="5432",
-                                  database="dani")
+                                  database="d2bjsr179tpgef")
 
     # Create a cursor to perform database operations
     cursor = connection.cursor()
@@ -98,7 +98,7 @@ class tasks(BaseModel, db.Model):
 #Check if password is right
 def check_pw(email):
     
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT password FROM users WHERE email like '{}' ORDER BY idUser DESC;""".format(email))
     password = cursor.fetchone()[0]
@@ -110,7 +110,7 @@ def check_pw(email):
 
 def check_pw_adm(email):
     
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT password FROM admin WHERE email = '{}' ORDER BY idAdmin DESC;""".format(email))
     password = cursor.fetchone()[0]
@@ -122,7 +122,7 @@ def check_pw_adm(email):
 
 #Select usernames signed up in the last 24hours
 def last24h():
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT email
                       FROM users
@@ -140,7 +140,7 @@ def last24h():
 
 #Select all Lists created in the last 24hours
 def last24hLists():
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT name
                     FROM lists
@@ -158,7 +158,7 @@ def last24hLists():
 
 #Total Lists created
 def totalLists():
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT * FROM lists ;""")
     todo = cursor.fetchall()
@@ -173,7 +173,7 @@ def totalLists():
 def signup(email, password):
     now = datetime.now()
     today = now.strftime("%Y-%m-%d %H:%M:%S")
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT password FROM users WHERE email = '{}';""".format(email))
     exist = cursor.fetchone() 
@@ -193,7 +193,7 @@ def signup(email, password):
 #Returns all the users
 def check_users():
     
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT email FROM users;""")
     db_users = cursor.fetchall()
@@ -216,7 +216,7 @@ def check_users():
 
 #Delete the User, their Lists and their Tasks on DB
 def delUser(name):
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""DELETE FROM users WHERE email = '{}';""".format(name))
     cursor.execute("""DELETE FROM lists WHERE email = '{}';""".format(name))
@@ -230,7 +230,7 @@ def delUser(name):
 
 #Show all details of a user on DB
 def selUser(email):
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT * FROM users WHERE email = '{}';""".format(email))
     todo = cursor.fetchall()
@@ -243,7 +243,7 @@ def selUser(email):
 
 #Show all tasks of a user on DB
 def allUserTasks(email):
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT * FROM tasks WHERE email = '{}';""".format(email))
     todo = cursor.fetchall()
@@ -256,7 +256,7 @@ def allUserTasks(email):
 
 #Show all lists of a user on DB
 def allUserLists(email):
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT * FROM lists WHERE email = '{}';""".format(email))
     todo = cursor.fetchall()
@@ -270,7 +270,7 @@ def allUserLists(email):
 
 #Show all users on DB
 def allUsers():
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT * FROM users;""")
     todo = cursor.fetchall()
@@ -283,7 +283,7 @@ def allUsers():
 
 #Select list by ID
 def selList(username):
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT * FROM lists WHERE email = '{}';""".format(username))
     todo = cursor.fetchall()
@@ -297,7 +297,7 @@ def selList(username):
 
 #Select task by ID of list
 def selTask(idlist,username):
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT * FROM tasks WHERE (idList = '{}' and email = '{}');""".format(idlist,username))
     todo = cursor.fetchall()
@@ -313,7 +313,7 @@ def selTask(idlist,username):
 def createList(name,email):
     now = datetime.now()
     today = now.strftime("%Y-%m-%d %H:%M:%S")
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""SELECT name FROM lists WHERE (name = '{}' and email = '{}');""".format(name,email))
     exist = cursor.fetchone() 
@@ -332,7 +332,7 @@ def createList(name,email):
 
 #Delete list on DB
 def deleteList(name):
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""DELETE FROM lists WHERE name = '{}';""".format(name))
         
@@ -344,7 +344,7 @@ def deleteList(name):
 
 #Rename list on DB
 def updateList(name,idn):
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""UPDATE lists SET name = '{}' WHERE idList = '{}';""".format(name,idn))
         
@@ -358,7 +358,7 @@ def updateList(name,idn):
 def createTask(name,idlist,email):
     now = datetime.now()
     today = now.strftime("%Y-%m-%d %H:%M:%S")
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""INSERT INTO tasks(name,date,idList,email)VALUES('{}','{}','{}','{}');""".format(name,today,idlist,email))
     
@@ -372,7 +372,7 @@ def createTask(name,idlist,email):
 
 #Delete all tasks by idlistt
 def deltasks(idlist):
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""DELETE FROM tasks WHERE idList = '{}';""".format(idlist))
         
@@ -385,7 +385,7 @@ def deltasks(idlist):
 
 #Delete task on DB
 def deleteTask(name):
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""DELETE FROM tasks WHERE name = '{}';""".format(name))
         
@@ -397,7 +397,7 @@ def deleteTask(name):
 
 #Rename task on DB
 def updateTask(name,idn):
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute("""UPDATE tasks SET name = '{}' WHERE idTask = '{}';""".format(name,idn))
         
@@ -409,7 +409,7 @@ def updateTask(name,idn):
 
 #Make new Table
 def newtable():
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute(
     """CREATE TABLE admin(
@@ -425,7 +425,7 @@ def newtable():
     connection.close()
 #Delete Table
 def deltable():
-    connection = psycopg2.connect(database="dani", user="dani",password="0410", host="localhost", port="5432")
+    connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
     cursor.execute(
     """DROP TABLE admin;"""
