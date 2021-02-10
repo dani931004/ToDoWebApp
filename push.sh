@@ -1,3 +1,3 @@
 git add .
 git commit -m "done"
-git push
+dani931004|git push
