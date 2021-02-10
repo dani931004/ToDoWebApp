@@ -1,1 +1,1 @@
-web: gunicorn Homework3:app
+web: gunicorn app:app
