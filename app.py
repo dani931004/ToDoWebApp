@@ -4,7 +4,7 @@ from flask_paginate import Pagination, get_page_parameter, get_page_args
 from model import db
 
 
-
+SQLALCHEMY_DATABASE_URI = "postgres://mxvufuhtwjccvs:b11b3a25eacaedf50b69fd4e70b830fc4e0ae64a60101ce7fca2109740ee61b5@ec2-99-81-238-134.eu-west-1.compute.amazonaws.com:5432/d2bjsr179tpgef"
 #app name
 app = Flask(__name__)
 
