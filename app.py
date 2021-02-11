@@ -104,15 +104,16 @@ def admin():
 
 @app.route('/userspage', methods = ['GET','POST'])
 def userspage():
-  per_page = request.args.get(key="",type=int, default=50)
-  allusers = model.allUsers()
-  page = request.args.get(get_page_parameter(), type=int, default=1)
-  offset = (page - 1) * per_page
-  total = len(model.allUsers())
-  pagination_users = get_users(offset=offset, per_page=per_page)
-  pagination = Pagination(page=page, per_page=per_page, total=total, css_framework='bootstrap4')
-  return render_template('userspage.html',allusers=allusers, users=pagination_users, page=page, per_page=per_page, pagination=pagination)
-
+  if 'email' in session and (session['email'] == "admin"):
+    per_page = request.args.get(key="",type=int, default=50)
+    allusers = model.allUsers()
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    offset = (page - 1) * per_page
+    total = len(model.allUsers())
+    pagination_users = get_users(offset=offset, per_page=per_page)
+    pagination = Pagination(page=page, per_page=per_page, total=total, css_framework='bootstrap4')
+    return render_template('userspage.html',allusers=allusers, users=pagination_users, page=page, per_page=per_page, pagination=pagination)
+  return render_template('admin.html')
 
 
 @app.route('/userinfo', methods = ['GET','POST'])
