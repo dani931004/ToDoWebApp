@@ -10,17 +10,6 @@ app = Flask(__name__)
 
 
 
-POSTGRES = {
-    'user': 'dani',
-    'pw': 'password',
-    'db': 'dani',
-    'host': 'localhost',
-    'port': '5432',
-}
-app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
-
-
 # app config
 db.init_app(app)
 app.secret_key = "daniconda"

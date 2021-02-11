@@ -295,7 +295,7 @@ def selList(username):
     
     return todo
 
-#Select task by ID of list
+#Select by ID of list
 def selTask(idlist,username):
     connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
