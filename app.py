@@ -15,8 +15,6 @@ db.init_app(app)
 app.secret_key = "daniconda"
 users = list(range(len(model.allUsers())))
 
-username = session['email']
-usernameadm = session['email']
 user = model.check_users()
 
 @app.route("/", methods = ["GET"])
@@ -64,7 +62,8 @@ def getSession():
   if 'email' in session:
     return session['email']
   return redirect(url_for('login'))
-
+username = session['email']
+usernameadm = session['email']
 @app.route('/logout')
 def logout():
   session.pop('email', None)
