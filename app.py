@@ -90,7 +90,6 @@ def getSessionadm():
 
 @app.route('/admin', methods = ['GET', 'POST'])
 def admin():
-  global username
   if request.method ==  'POST':
     session.pop('email', None)
     username = request.form['email']
@@ -100,10 +99,10 @@ def admin():
       return redirect(url_for('adminpage'))
   return render_template('admin.html')
 
-print("#"*200)
+
 username = ""
 usernameadm = ""
-print("#"*200)
+
 @app.route('/userspage', methods = ['GET','POST'])
 def userspage():
   if 'email' in session and (session['email'] == "admin"):
@@ -232,4 +231,4 @@ def termsofuse():
 
 
 if __name__ == "__main__":
-  app.run(debug = True)
+  app.run()
