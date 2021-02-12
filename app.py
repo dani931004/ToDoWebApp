@@ -42,10 +42,8 @@ def before_request():
   g.email = None
   if 'email' in session:
     g.email = session['email']
-    
-username = ""
-usernameadm = ""
 
+username = g.email
 @app.route('/login', methods= ['GET','POST'])
 def login():
   global username
