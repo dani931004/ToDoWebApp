@@ -165,13 +165,15 @@ def add():
 
 @app.route('/dell', methods=['POST'])  
 def dell():
-  name = request.form['name']
-  idlist = request.form['idlistt']
-  dbdell = model.deleteList(name)
-  todolist = model.selList(username)
-  deltasks = model.deltasks(idlist)
-  return render_template('dashboard.html', message = dbdell, todolist = todolist)
-
+  if 'email' in session:
+    name = request.form['name']
+    idlist = request.form['idlistt']
+    dbdell = model.deleteList(name)
+    todolist = model.selList(username)
+    deltasks = model.deltasks(idlist)
+    return render_template('dashboard.html', message = dbdell, todolist = todolist)
+  else:
+    return render_template('homepage.html')
 @app.route('/update', methods = ['POST'])
 def update():
   name = request.form["name"]
