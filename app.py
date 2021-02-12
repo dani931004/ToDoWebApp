@@ -44,6 +44,7 @@ def before_request():
     g.email = session['email']
     
 
+
 @app.route('/login', methods= ['GET','POST'])
 def login():
   global username
@@ -62,8 +63,7 @@ def getSession():
   if 'email' in session:
     return session['email']
   return redirect(url_for('login'))
-username = session['email']
-usernameadm = session['email']
+
 @app.route('/logout')
 def logout():
   session.pop('email', None)
@@ -86,6 +86,8 @@ def getSessionadm():
     return session['email']
   return redirect(url_for('admin'))
 
+
+
 @app.route('/admin', methods = ['GET', 'POST'])
 def admin():
   global username
@@ -98,7 +100,10 @@ def admin():
       return redirect(url_for('adminpage'))
   return render_template('admin.html')
 
-
+print("#"*200)
+username = ""
+usernameadm = ""
+print("#"*200)
 @app.route('/userspage', methods = ['GET','POST'])
 def userspage():
   if 'email' in session and (session['email'] == "admin"):
@@ -136,9 +141,6 @@ def deluser():
 
 def get_users(offset=0, per_page=50):
   return users[offset: offset + per_page]
-
-
-
 
 
 @app.route('/aboutus', methods= ['GET'])
@@ -180,7 +182,7 @@ def update():
   return render_template('dashboard.html',message = dbupdate, todolist = todolist)
 
 
-
+idList = ""
 @app.route('/todolist', methods= ['GET','POST'])
 def todolist():
   global idList
@@ -230,4 +232,4 @@ def termsofuse():
 
 
 if __name__ == "__main__":
-  app.run()
+  app.run(debug = True)
