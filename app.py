@@ -192,7 +192,7 @@ def todolist():
   listname = request.form['listname']
   alltasks = model.selTask(idlist,username)
   sellist = model.selList(username)
-  return render_template('todolist.html',listname = listname, idlist = idlist, alltasks = alltasks, sellist=sellist),idList
+  return render_template('todolist.html',listname = listname, idlist = idlist, alltasks = alltasks, sellist=sellist)
 
 @app.route('/addtask', methods= ['POST'])
 def addtask():
