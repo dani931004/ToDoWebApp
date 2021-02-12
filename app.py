@@ -42,8 +42,15 @@ def before_request():
   g.email = None
   if 'email' in session:
     g.email = session['email']
+    
+try:
+  username = email
+except:
+  print("NOT WORKING")
+finally:
+  print("DONE!")
 
-username = g.email
+
 @app.route('/login', methods= ['GET','POST'])
 def login():
   global username
