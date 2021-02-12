@@ -38,63 +38,6 @@ except (Exception, Error) as error:
 '''
 
 
-
-
-class BaseModel(db.Model):
-    """Base data model for all objects"""
-    __abstract__ = True
-
-    def __init__(self, *args):
-        super().__init__(*args)
-
-    def __repr__(self):
-        """Define a base way to print models"""
-        return '%s(%s)' % (self.__class__.__name__, {
-            column: value
-            for column, value in self._to_dict().items()
-        })
-
-    def json(self):
-        """
-                Define a base way to jsonify models, dealing with datetime objects
-        """
-        return {
-            column: value if not isinstance(value, datetime.date) else value.strftime('%Y-%m-%d')
-            for column, value in self._to_dict().items()
-        }
-
-
-
-class users(BaseModel, db.Model):
-    __tablename__ = 'users'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(120), nullable=False)
-    datetime = db.Column(db.String(120), default=datetime.now)
-    
-class admin(BaseModel, db.Model):
-    __tablename__ = 'admin'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), nullable=False)
-    password = db.Column(db.String(120), nullable=False)
-
-class lists(BaseModel, db.Model):
-    __tablename__ = 'lists'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), nullable=False)
-    datetime = db.Column(db.String(120), default=datetime.now)
-
-class tasks(BaseModel, db.Model):
-    __tablename__ = 'tasks'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), nullable=False)
-    datetime = db.Column(db.String(120), default=datetime.now)
-
-
 #Check if password is right
 def check_pw(email):
     

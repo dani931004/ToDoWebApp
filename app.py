@@ -15,11 +15,9 @@ db.init_app(app)
 app.secret_key = "daniconda"
 users = list(range(len(model.allUsers())))
 
-username = ''
-usernameadm = ''
+username = session['email']
+usernameadm = session['email']
 user = model.check_users()
-
-idList=1
 
 @app.route("/", methods = ["GET"])
 def home():
