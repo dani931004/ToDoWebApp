@@ -43,7 +43,8 @@ def before_request():
   if 'email' in session:
     g.email = session['email']
     
-
+username = ""
+usernameadm = ""
 
 @app.route('/login', methods= ['GET','POST'])
 def login():
@@ -100,8 +101,7 @@ def admin():
   return render_template('admin.html')
 
 
-username = ""
-usernameadm = ""
+
 
 @app.route('/userspage', methods = ['GET','POST'])
 def userspage():
