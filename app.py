@@ -224,7 +224,7 @@ def updatetask():
   dbupdate = model.updateTask(name,number)
   sellist = model.selList(username)
   alltasks = model.selTask(idList,username)
-  return render_template('todolist.html', alltasks = alltasks, sellist = sellist)
+  return render_template('todolist.html', idlistt = idlistt, alltasks = alltasks, sellist = sellist)
 
 @app.route('/deltask', methods= ['POST'])
 def deltask():
@@ -234,7 +234,7 @@ def deltask():
   idlistt = request.form['idlistt']
   alltasks = model.selTask(idList,username)
   sellist = model.selList(username)
-  return render_template('todolist.html',sellist = sellist, message = dbdel,alltasks = alltasks)
+  return render_template('todolist.html', idlistt = idlistt, sellist = sellist, message = dbdel, alltasks = alltasks)
 
 @app.route('/privacy', methods= ['GET'])
 def privacy():
