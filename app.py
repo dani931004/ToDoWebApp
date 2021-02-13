@@ -71,7 +71,10 @@ def getSession():
 @app.route('/logout')
 def logout():
   session.pop('email', None)
-  return redirect(url_for('home'))
+  res = make_response(render_template('homepage.html'))
+  res.set_cookie('email', username, max_age = 0)
+  
+  return res
 
 @app.route('/signup', methods= ['GET','POST'])
 def signup():
