@@ -221,6 +221,7 @@ def updatetask():
   username = request.cookies.get('email')
   number = request.form["number"]
   name = request.form["name"]
+  idlistt = request.form['idlistt']
   dbupdate = model.updateTask(name,number)
   sellist = model.selList(username)
   alltasks = model.selTask(idList,username)
