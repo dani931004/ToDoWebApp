@@ -303,13 +303,18 @@ def createTask(name,idlist,email):
     today = now.strftime("%Y-%m-%d %H:%M:%S")
     connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
-    cursor.execute("""INSERT INTO tasks(name,date,idList,email)VALUES('{}','{}','{}','{}');""".format(name,today,idlist,email))
+    cursor.execute("""SELECT name FROM tasks WHERE name = '{}' ;""".format(name))
+    exist = cursor.fetchall()
+    if exist == None:
+        cursor.execute("""INSERT INTO tasks(name,date,idList,email)VALUES('{}','{}','{}','{}');""".format(name,today,idlist,email))
+        
+        connection.commit()
+        cursor.close()
+        connection.close()
     
-    connection.commit()
-    cursor.close()
-    connection.close()
-  
-    return "You have created the task '{}' successfully!".format(name)
+        return "You have created the task '{}' successfully!".format(name)
+    else:
+        return "This task already exists!"
 
 
 
