@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, session, redirect, url_for, g
+from flask import Flask, render_template, request, session, redirect, url_for, g, make_response
+import flask
 import model
 from flask_paginate import Pagination, get_page_parameter, get_page_args
 from model import db
@@ -43,24 +44,21 @@ def before_request():
   if 'email' in session:
     g.email = session['email']
     
-try:
-  username = email
-except:
-  print("NOT WORKING")
-finally:
-  print("DONE!")
 
-
+username = ""
 @app.route('/login', methods= ['GET','POST'])
 def login():
   global username
   if request.method ==  'POST':
     session.pop('email', None)
     username = request.form['email']
+    todolist = model.selList(username)
+    res = make_response(render_template('dashboard.html', todolist = todolist))
+    res.set_cookie('email', username)
     pwd = model.check_pw(username)
     if request.form['password'] == pwd:
       session['email'] = request.form['email']
-      return redirect(url_for('home'))
+      return res
   return render_template('login.html')
 
 
