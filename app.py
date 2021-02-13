@@ -155,6 +155,7 @@ def about():
 @app.route('/dashboard', methods = ['GET'])
 def dashboard():
   if 'email' in session:
+    username = request.cookies.get('email')
     g.user=session['email']
     todolist = model.selList(username)
     return render_template('dashboard.html', message = 'Welcome to Dashboard {}'.format(username), todolist=todolist)
@@ -164,6 +165,7 @@ def dashboard():
         
 @app.route('/add', methods=['POST'])
 def add():
+  username = request.cookies.get('email')
   name = request.form['name']
   dbadd = model.createList(name,username)
   todolist = model.selList(username)
@@ -172,6 +174,7 @@ def add():
 @app.route('/dell', methods=['POST'])  
 def dell():
   if 'email' in session:
+    username = request.cookies.get('email')
     name = request.form['name']
     idlist = request.form['idlistt']
     dbdell = model.deleteList(name)
@@ -182,6 +185,7 @@ def dell():
     return render_template('homepage.html')
 @app.route('/update', methods = ['POST'])
 def update():
+  username = request.cookies.get('email')
   name = request.form["name"]
   number = request.form["number"]
   dbupdate = model.updateList(name,number)
@@ -193,6 +197,7 @@ idList = ""
 @app.route('/todolist', methods= ['GET','POST'])
 def todolist():
   global idList
+  username = request.cookies.get('email')
   idlist = request.form['idlist'] # ID of the List
   idList = idlist
   listname = request.form['listname']
@@ -202,6 +207,7 @@ def todolist():
 
 @app.route('/addtask', methods= ['POST'])
 def addtask():
+  username = request.cookies.get('email')
   name = request.form['name']
   idlistt = request.form['idlistt']
   dbadd = model.createTask(name,idList,username)
@@ -212,6 +218,7 @@ def addtask():
 
 @app.route('/updatetask', methods= ["POST"])
 def updatetask():
+  username = request.cookies.get('email')
   number = request.form["number"]
   name = request.form["name"]
   dbupdate = model.updateTask(name,number)
@@ -221,6 +228,7 @@ def updatetask():
 
 @app.route('/deltask', methods= ['POST'])
 def deltask():
+  username = request.cookies.get('email')
   name = request.form["name"]
   dbdel = model.deleteTask(name)
   idlistt = request.form['idlistt']
