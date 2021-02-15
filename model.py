@@ -289,13 +289,20 @@ def deleteList(name):
 def updateList(name,idn):
     connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
-    cursor.execute("""UPDATE lists SET name = '{}' WHERE idList = '{}';""".format(name,idn))
-        
-    connection.commit()
-    cursor.close()
-    connection.close()
+    cursor.execute("""SELECT name FROM lists WHERE (name = '{}' and idList = '{}');""".format(name,idn))
+    exist = cursor.fetchone()
+    if exist == None:
+        cursor.execute("""UPDATE lists SET name = '{}' WHERE idList = '{}';""".format(name,idn))
+            
+        connection.commit()
+        cursor.close()
+        connection.close()
     
-    return "You have renamed the list number '{}' to '{}' successfully!".format(idn,name)
+        return "You have renamed the list to '{}' successfully!".format(name)
+    else:
+        return "The name '{}' already exists in lists!".format(name)
+    
+
 
 #Create task on DB
 def createTask(name,idlist,email):
@@ -347,13 +354,18 @@ def deleteTask(name):
 def updateTask(name,idn):
     connection = psycopg2.connect(database="d2bjsr179tpgef", user="mxvufuhtwjccvs",password="0410", host="ec2-99-81-238-134.eu-west-1.compute.amazonaws.com", port="5432")
     cursor = connection.cursor()
-    cursor.execute("""UPDATE tasks SET name = '{}' WHERE idTask = '{}';""".format(name,idn))
-        
-    connection.commit()
-    cursor.close()
-    connection.close()
+    cursor.execute("""SELECT name FROM tasks WHERE (name = '{}' and idTask = '{}');""".format(name,idn))
+    exist = cursor.fetchone()
+    if exist == None:
+        cursor.execute("""UPDATE tasks SET name = '{}' WHERE idTask = '{}';""".format(name,idn))
+            
+        connection.commit()
+        cursor.close()
+        connection.close()
     
-    return "You have renamed the task number '{}' to '{}' successfully!".format(idn,name)
+        return "You have renamed the task number '{}' to '{}' successfully!".format(idn,name)
+    else:
+        return "The name '{}' already exists in tasks!".format(name)
 
 #Make new Table
 def newtable():
