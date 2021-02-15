@@ -203,7 +203,9 @@ def todolist():
   listname = request.form['listname']
   alltasks = model.selTask(idlist,username)
   sellist = model.selList(username)
-  return render_template('todolist.html',listname = listname, idlist = idlist, alltasks = alltasks, sellist=sellist)
+  res = make_response(render_template('todolist.html',listname = listname, idlist = idList, alltasks = alltasks, sellist=sellist))
+  res.set_cookie('idlist', idlist)
+  return res
 
 @app.route('/addtask', methods= ['POST'])
 def addtask():
@@ -213,7 +215,7 @@ def addtask():
   dbadd = model.createTask(name,idList,username)
   sellist = model.selList(username)
   alltasks = model.selTask(idList,username)
-  return render_template('todolist.html',idlistt = idlistt, message = dbadd, alltasks = alltasks, sellist = sellist)
+  return render_template('todolist.html',idlistt = idList, message = dbadd, alltasks = alltasks, sellist = sellist)
 
 
 @app.route('/updatetask', methods= ["POST"])
