@@ -211,7 +211,7 @@ def todolist():
 def addtask():
   username = request.cookies.get('email')
   name = request.form['name']
-  idlistt = request.form['idlistt']
+  idList = request.cookies.get('idlist')
   dbadd = model.createTask(name,idList,username)
   sellist = model.selList(username)
   alltasks = model.selTask(idList,username)
