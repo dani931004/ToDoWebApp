@@ -220,6 +220,7 @@ def addtask():
 
 @app.route('/updatetask', methods= ["POST"])
 def updatetask():
+  idList = request.cookies.get('idlist')
   username = request.cookies.get('email')
   number = request.form["number"]
   name = request.form["name"]
@@ -231,6 +232,7 @@ def updatetask():
 
 @app.route('/deltask', methods= ['POST'])
 def deltask():
+  idList = request.cookies.get('idlist')
   username = request.cookies.get('email')
   name = request.form["name"]
   dbdel = model.deleteTask(name)
